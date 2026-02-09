@@ -14,9 +14,13 @@ on:
     paths:
       - 'kubernetes/nginx/**'
 
+permissions:
+  contents: read
+
 jobs:
   docker:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: checkout code
@@ -60,4 +64,4 @@ jobs:
           git config --global user.name "CI Bot"
           git add kubernetes/nginx/deploy.yaml
           git commit -m "[CI]: Update nginx image tag"
-          git push origin HEAD:main -f
+          git push origin HEAD:main
